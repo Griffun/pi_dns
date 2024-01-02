@@ -1,0 +1,15 @@
+# This file should go in /etc/sudoers.d/ on your docker node that hosts pihole
+#
+# This sudoers file allows the 'deploy' user to perform two specific operations
+# without requiring a password:
+#
+# 1. Copy the custom.list file into the Docker volume for the Pi-hole container:
+#
+# 2. Restart the DNS service within the Pi-hole Docker container:
+#
+# Make adjustments as necessary for your system.
+#
+
+deploy ALL=(ALL:ALL) NOPASSWD: /bin/cp custom.list /var/lib/docker/volumes/pihole/etc-pihole/custom.list
+deploy ALL=(ALL:ALL) NOPASSWD: /bin/cp custom.conf /var/lib/docker/volumes/pihole/etc-dnsmasq.d/99-custom.conf
+deploy ALL=(ALL:ALL) NOPASSWD: /usr/bin/docker exec pihole pihole restartdns
